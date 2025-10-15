@@ -15,7 +15,7 @@ export class SignalRService {
     console.log('Starting SignalR connection...');
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:32770/stocks')
+      .withUrl('/stocks')
       .configureLogging(signalR.LogLevel.Information)
       .withAutomaticReconnect()
       .build();

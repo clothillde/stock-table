@@ -4,15 +4,12 @@ import { IStock } from '../../interfaces/stock.interface';
 import { HighlightChangeDirective } from '../../directives/highlight-change.directive';
 
 @Component({
-  selector: 'app-stock-table',
-  standalone: true,
-  imports: [
-    CommonModule,
-    HighlightChangeDirective
-  ],
-  templateUrl: './stock-table.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-stock-table',
+    standalone: true,
+    imports: [CommonModule, HighlightChangeDirective],
+    templateUrl: './stock-table.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
-  @Input() stocks: IStock[] = [];
+    @Input() stocks: IStock[] = [];
 }

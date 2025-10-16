@@ -1,16 +1,15 @@
 <div class="max-w-2xl mx-auto mt-10 shadow rounded-lg">
-  <h2 class="text-xl font-bold p-4 text-center">Live Stock Application</h2>
+    <h2 class="text-xl font-bold p-4 text-center">Live Stock Application</h2>
 
-  @if (loading()) {
-    <app-loading message="Loading stock data..."></app-loading>
-  }
+    @if (loading()) {
+        <app-loading message="Loading stock data..."></app-loading>
+    }
 
-  @if (!loading() && error()) {
-<app-error [message]="error()!"></app-error>
-  }
+    @if (!loading() && error()) {
+        <app-error [message]="error()!"></app-error>
+    }
 
-  @if(!loading() && !error()) {
-
-  <app-stock-table [stocks]="stocks()"></app-stock-table>
+    @if (!loading() && !error()) {
+        <app-stock-table [stocks]="stocks()"></app-stock-table>
     }
 </div>

@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-loading',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './loading.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-loading',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './loading.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoadingComponent {
-  @Input() message: string = 'Loading data...';
+    @Input() message = 'Loading data...';
 }

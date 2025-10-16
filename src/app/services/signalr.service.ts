@@ -1,57 +1,44 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { StocksStore } from '../stores/stocks.store';
 import { IStock } from '../interfaces/stock.interface';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class SignalRService {
-  private hubConnection!: signalR.HubConnection;
-  private stocksSource = new BehaviorSubject<IStock[]>([]);
-  stocks$ = this.stocksSource.asObservable();
+  private _hubConnection!: signalR.HubConnection;
 
-  startConnection() {
-    console.log('Starting SignalR connection...');
+  constructor(private _stocksStore: StocksStore) {}
 
-    this.hubConnection = new signalR.HubConnectionBuilder()
+  public startConnection() {
+    this._hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('/stocks')
       .configureLogging(signalR.LogLevel.Information)
       .withAutomaticReconnect()
       .build();
 
-    this.hubConnection
+    this._hubConnection
       .start()
       .then(() => {
-        console.log('SignalR connection started');
-        this.registerHandlers();
-
-        this.fetchAllStocks();
+        this._registerHandlers();
+        this._fetchAllStocks();
       })
-      .catch(err => console.error('Error while starting connection: ', err));
+      .catch(err => console.error('Error while starting connection:', err));
   }
 
-  private registerHandlers() {
-    this.hubConnection.on('updateStockPrice', (stock: IStock) => {
-      console.log('Stock update from hub:', stock);
-
-      const current = this.stocksSource.value;
-      const updated = current.filter(s => s.symbol !== stock.symbol).concat(stock);
-
-      this.stocksSource.next(updated);
+  private _registerHandlers() {
+    this._hubConnection.on('updateStockPrice', (stock: IStock) => {
+      this._stocksStore.upsertStock(stock);
     });
 
-    this.hubConnection.onclose(error => {
+    this._hubConnection.onclose(error => {
       console.warn('SignalR connection closed:', error);
     });
   }
 
-  private async fetchAllStocks() {
-    console.log('Fetching all stocks...');
+  private async _fetchAllStocks() {
     try {
-      const stocks = await this.hubConnection.invoke<IStock[]>('getAllStocks');
-      console.log('Initial stocks from backend:', stocks);
-      this.stocksSource.next(stocks || []);
+      const stocks = await this._hubConnection.invoke<IStock[]>('getAllStocks');
+      this._stocksStore.setAll(stocks || []);
     } catch (err) {
       console.error('Error fetching stocks:', err);
     }

@@ -11,7 +11,7 @@ const initialState: StocksState = {
 };
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class StocksStore extends signalStore(
   { providedIn: 'root' },

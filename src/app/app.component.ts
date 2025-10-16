@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SignalRService } from './services/signalr.service';
-import { IStock } from './interfaces/stock.interface';
+import { StocksStore } from './stores/stocks.store';
 
 @Component({
   selector: 'app-root',
@@ -11,17 +11,14 @@ import { IStock } from './interfaces/stock.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  stocks: IStock[] = [];
+  stocks = computed(() => this._stocksStore.stocks());
 
-  constructor(private signalRService: SignalRService) {}
+  constructor(
+    private _signalRService: SignalRService,
+    private _stocksStore: StocksStore
+  ) {}
 
   ngOnInit(): void {
-    console.log('AppComponent init');
-    this.signalRService.startConnection();
-
-    this.signalRService.stocks$.subscribe(data => {
-      console.log('Angular received stocks:', data);
-      this.stocks = data;
-    });
+    this._signalRService.startConnection();
   }
 }

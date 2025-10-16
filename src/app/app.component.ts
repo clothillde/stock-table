@@ -12,6 +12,7 @@ import { StocksStore } from './stores/stocks.store';
 })
 export class AppComponent implements OnInit {
   stocks = computed(() => this._stocksStore.stocks());
+  loading = computed(() => this.stocks().length === 0);
 
   constructor(
     private _signalRService: SignalRService,

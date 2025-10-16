@@ -2,15 +2,17 @@ import { Component, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SignalRService } from './services/signalr.service';
 import { StocksStore } from './stores/stocks.store';
-import { HighlightChangeDirective } from './directives/highlight-change.directive';
+import { ErrorComponent, LoadingComponent, TableComponent } from './components';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
-    HighlightChangeDirective
-  ],
+    LoadingComponent,
+    ErrorComponent,
+    TableComponent
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

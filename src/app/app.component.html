@@ -1,56 +1,16 @@
-<div class="max-w-3xl mx-auto mt-10 shadow rounded-lg">
+<div class="max-w-2xl mx-auto mt-10 shadow rounded-lg">
   <h2 class="text-xl font-bold p-4 text-center">Live Stock Application</h2>
 
   @if (loading()) {
-    <div class="p-6 flex justify-center items-center text-gray-500 space-x-2">
-      <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor"
-              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
-        </path>
-      </svg>
-      <span>Loading data</span>
-    </div>
+    <app-loading message="Loading stock data..."></app-loading>
   }
 
   @if (!loading() && error()) {
-    <div class="p-4 text-center text-red-600">
-      {{ error() }}
-    </div>
+<app-error [message]="error()!"></app-error>
   }
 
   @if(!loading() && !error()) {
-      <table class="w-full text-sm sm:text-base">
-        <thead>
-          <tr class="bg-gray-100 text-left text-gray-700">
-            <th class="px-2 sm:px-4 py-2">Symbol</th>
-            <th class="px-2 sm:px-4 py-2 text-right">Price</th>
-            <th class="px-2 sm:px-4 py-2 text-right">Day Open</th>
-            <th class="px-2 sm:px-4 py-2 text-right">Last Update</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (stock of stocks(); track $index) {
-            <tr class="border-b hover:bg-gray-50">
-              <td class="px-2 sm:px-4 py-2 font-semibold text-gray-900">{{ stock.symbol }}</td>
 
-              <td class="px-2 sm:px-4 py-2 text-right"
-                  [highlightChange]="stock.price">
-                {{ stock.price | number:'1.2-2' }}
-              </td>
-
-              <td class="px-2 sm:px-4 py-2 text-right"
-                  [highlightChange]="stock.dayOpen">
-                {{ stock.dayOpen | number:'1.2-2' }}
-              </td>
-
-              <td class="px-2 sm:px-4 py-2 text-right"
-                  [highlightChange]="stock.lastUpdate">
-                {{ stock.lastUpdate | date:'short' }}
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-  }
+  <app-stock-table [stocks]="stocks()"></app-stock-table>
+    }
 </div>

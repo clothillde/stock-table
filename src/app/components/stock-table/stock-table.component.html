@@ -1,0 +1,31 @@
+    <table class="w-full text-sm sm:text-base">
+      <thead>
+        <tr class="bg-gray-100 text-left text-gray-700">
+          <th class="px-2 sm:px-4 py-2">Symbol</th>
+          <th class="px-2 sm:px-4 py-2 text-right">Price</th>
+          <th class="px-2 sm:px-4 py-2 text-right">Day Open</th>
+          <th class="px-2 sm:px-4 py-2 text-right">Last Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (stock of stocks; track $index) {
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-2 sm:px-4 py-2 font-semibold text-gray-900">
+              {{ stock.symbol }}
+            </td>
+
+            <td class="px-2 sm:px-4 py-2 text-right" [highlightChange]="stock.price">
+              {{ stock.price | number:'1.2-2' }}
+            </td>
+
+            <td class="px-2 sm:px-4 py-2 text-right" [highlightChange]="stock.dayOpen">
+              {{ stock.dayOpen | number:'1.2-2' }}
+            </td>
+
+            <td class="px-2 sm:px-4 py-2 text-right" [highlightChange]="stock.lastUpdate">
+              {{ stock.lastUpdate | date:'short' }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>

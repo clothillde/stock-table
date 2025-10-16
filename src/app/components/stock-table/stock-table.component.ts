@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IStock } from '../../interfaces/stock.interface';
 import { HighlightChangeDirective } from '../../directives/highlight-change.directive';
@@ -11,6 +11,7 @@ import { HighlightChangeDirective } from '../../directives/highlight-change.dire
     HighlightChangeDirective
   ],
   templateUrl: './stock-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent {
   @Input() stocks: IStock[] = [];

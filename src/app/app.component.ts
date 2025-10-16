@@ -1,4 +1,4 @@
-import { Component, OnInit, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SignalRService } from './services/signalr.service';
 import { StocksStore } from './stores/stocks.store';
@@ -14,7 +14,8 @@ import { ErrorComponent, LoadingComponent, TableComponent } from './components';
     TableComponent
 ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   stocks = computed(() => this._stocksStore.stocks());

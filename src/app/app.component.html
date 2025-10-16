@@ -1,7 +1,11 @@
-<h1>📊 Live Stock Prices</h1>
+<h1>Live Stock Prices</h1>
+
+@if (error()) {
+  <div>{{ error() }}</div>
+}
 
 @if (loading()) {
-  <div>Ładowanie danych</div>
+  <div>Loading data</div>
 } @else {
   <table>
     <thead>

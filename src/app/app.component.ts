@@ -12,7 +12,8 @@ import { StocksStore } from './stores/stocks.store';
 })
 export class AppComponent implements OnInit {
   stocks = computed(() => this._stocksStore.stocks());
-  loading = computed(() => this.stocks().length === 0);
+  loading = computed(() => this.stocks().length === 0 && !this._signalRService.error());
+  error = computed(() => this._signalRService.error());
 
   constructor(
     private _signalRService: SignalRService,

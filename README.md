@@ -23,6 +23,7 @@ docker run -p 32770:8080 --rm kubamichalek/statscore-websocket-recruitment
 Project is using proxy to avoid CORS issues while getting data from backend
 
 npm install
+
 npm start -> it will automatically use the proxy
 
 ### 3. Application will be ready at

@@ -1,27 +1,30 @@
-# StockTableApp
+# Live Stock Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+Application built as a recruitment task - Application which takes stock data from ready WebSocket and present them in a dynamic responsive table. There should be highlight changes when:
+  - Green flash – value increased
+  - Red flash – value decreased
+  - Blue flash – date/time field updated
 
-## Development server
+Requirements for technologies to be used:
+- Angular v18+
+- TailwindCSS
+- SignalR
+- NgRx Signals
+- RxJS
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installation and Running
 
-## Code scaffolding
+### 1. Start the backend (Docker)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+docker run -p 32770:8080 --rm kubamichalek/statscore-websocket-recruitment
 
-## Build
+### 2. Start the frontend
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Project is using proxy to avoid CORS issues while getting data from backend
 
-## Running unit tests
+npm install
+npm start -> it will automatically use the proxy
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 3. Application will be ready at
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+http://localhost:4200

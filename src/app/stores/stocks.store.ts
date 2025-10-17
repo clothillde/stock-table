@@ -1,41 +1,41 @@
-import { Injectable } from '@angular/core';
+import { Injectable, computed } from '@angular/core';
 import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 import { IStock } from '../interfaces/stock.interface';
 
 export interface StocksState {
-    entities: Record<string, IStock>;
+  entities: Record<string, IStock>;
 }
 
 const initialState: StocksState = {
-    entities: {},
+  entities: {},
 };
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class StocksStore extends signalStore(
-    { providedIn: 'root' },
-    withState(initialState),
-    withMethods((store) => ({
-        setAll(stocks: IStock[]) {
-            const entities = stocks.reduce<Record<string, IStock>>((acc, stock) => {
-                acc[stock.symbol] = stock;
-                return acc;
-            }, {});
-            patchState(store, { entities });
-        },
+  { providedIn: 'root' },
+  withState(initialState),
+  withMethods((store) => {
+    const stocks = computed(() => Object.values(store.entities()));
 
-        upsertStock(stock: IStock) {
-            patchState(store, (state) => ({
-                entities: {
-                    ...state.entities,
-                    [stock.symbol]: stock,
-                },
-            }));
-        },
+    return {
+      setAll(stocks: IStock[]) {
+        patchState(store, {
+          entities: Object.fromEntries(stocks.map((s) => [s.symbol, s])),
+        });
+      },
 
-        stocks() {
-            return Object.values(store.entities());
-        },
-    })),
+      upsertStock(stock: IStock) {
+        patchState(store, (state) => ({
+          entities: {
+            ...state.entities,
+            [stock.symbol]: stock,
+          },
+        }));
+      },
+
+      stocks,
+    };
+  }),
 ) {}
